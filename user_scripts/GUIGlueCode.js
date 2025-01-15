@@ -14,8 +14,6 @@ function registerGUIEvents() {
     //Add DOM events:
     addEvent("keydown", document, keyDown);
     addEvent("keyup", document, keyUpPreprocess);
-    addEvent("change", document.getElementById("rom_load"), fileLoadROM);
-    addEvent("change", document.getElementById("bios_load"), fileLoadBIOS);
     addEvent("click", document.getElementById("play"), function (e) {
         IodineGUI.Iodine.play();
     });

@@ -73,7 +73,7 @@ var IodineGUI = {
         ]
     }
 };
-window.onload = function () {
+function onLoad() {
     //Populate settings:
     registerDefaultSettings();
     //Initialize Iodine:

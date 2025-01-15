@@ -20,8 +20,6 @@ function GfxGlueCode(width, height) {
     this.initializeBuffers();                 //Initialize the buffer storage.
 }
 GfxGlueCode.prototype.initializeVSync = function () {
-    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
-    window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
     var parentObj = this;
     if (!window.requestAnimationFrame) {
         //Fallback timer eventing:

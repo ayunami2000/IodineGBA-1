@@ -24,38 +24,19 @@ function attachROM(ROM) {
         IodineGUI.Iodine.attachROM(ROM);
     }
 }
-function fileLoadShimCode(files, ROMHandler) {
-    if (typeof files != "undefined") {
-        if (files.length >= 1) {
-            //Gecko 1.9.2+ (Standard Method)
-            try {
-                var binaryHandle = new FileReader();
-                binaryHandle.onloadend = function () {
-                    ROMHandler(this.result);
-                }
-                binaryHandle.readAsArrayBuffer(files[files.length - 1]);
-            }
-            catch (error) {
-                try {
-                    var result = files[files.length - 1].getAsBinary();
-                    var resultConverted = [];
-                    for (var index = 0; index < result.length; ++index) {
-                        resultConverted[index] = result.charCodeAt(index) & 0xFF;
-                    }
-                    ROMHandler(resultConverted);
-                }
-                catch (error) {
-                    alert("Could not load the processed ROM file!");
-                }
-            }
-        }
+function fileLoadShimCode(base64, ROMHandler) {
+    var binaryString = atob(base64);
+    var bytes = new Uint8Array(binaryString.length);
+    for (var i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
     }
+    ROMHandler(bytes.buffer);
 }
 function fileLoadBIOS() {
-    fileLoadShimCode(this.files, attachBIOS);
+    fileLoadShimCode(biosB64, attachBIOS);
 }
 function fileLoadROM() {
-    fileLoadShimCode(this.files, attachROM);
+    fileLoadShimCode(romB64, attachROM);
 }
 function downloadFile(fileName, registrationHandler) {
     var ajax = new XMLHttpRequest();
